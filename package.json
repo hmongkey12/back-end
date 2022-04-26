@@ -1,0 +1,14 @@
+{
+  "name": "npmtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "runitdawg"
+  },
+  "author": "dao",
+  "license": "ISC",
+  "dependencies": {
+    "cat-me": "^1.0.3"
+  }
+}
