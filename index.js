@@ -8,5 +8,5 @@ server.listen(PORT, () => {
 });
 
 server.get("/dao", (req, res) => {
-  res.send("<h1>Hi Dao, you are the best.</h1>");
+  res.send("<h1>Hi Dao, you the best.</h1>");
 });
