@@ -9,6 +9,7 @@ if (PORT) {
   });
 
   server.use(express.json());
+  server.use(cors());
 
   server.get("/destinations", (req, res) => {
     res.send(200, destinations);
@@ -20,7 +21,7 @@ if (PORT) {
     dao: {
       name: "Dao",
       interests: ["tacos"],
-      city: "Sacramento",
+      city: "Sac Town",
     },
     nikko: {
       name: "Nikko",
@@ -50,7 +51,6 @@ if (PORT) {
         .status(404)
         .send({ error: `student by the name of ${name} not found` });
     }
-
     let filteredStudents = Object.values(students);
     if (interest) {
       filteredStudents = filteredStudents.filter((student) =>
@@ -62,18 +62,8 @@ if (PORT) {
         (student) => student.city.toLowerCase() === city.toLowerCase()
       );
     }
-
     return res.send(filteredStudents);
   });
-
-  // server.get("/students/name", (req, res) => {
-  //   let filteredStudents = Object.values(students).map((student) => {
-  //     const { name } = student;
-  //     return name;
-  //   });
-
-  //   return res.send(filteredStudents);
-  // });
 
   server.get("/students/name/:name", (req, res) => {
     const { name } = req.params;
@@ -83,6 +73,28 @@ if (PORT) {
         return res.send(student);
       }
       return res.status(404).send(filteredStudents);
+    }
+  });
+
+  server.get("/students", (req, res) => {
+    const { name } = req.params;
+    if (name) {
+      const student = students[name.toLowerCase()];
+      if (student) {
+        return res.send(student);
+      }
+      return res.status(404).send(filteredStudents);
+    }
+  });
+
+  server.get("/students/name/:name/city/:city", (req, res) => {
+    const { name, city } = req.params;
+    if (name && city) {
+      const student = students[name.toLowerCase()];
+      if (student && student.city.toLowerCase() === city.toLowerCase()) {
+        return res.send(student);
+      }
+      return res.status(404).send({ error: "Name with City was not found!" });
     }
   });
 
